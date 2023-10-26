@@ -260,7 +260,8 @@ class _MessageVerifier:
 
         if self.expect_json_payload:
             try:
-                msg.payload = json.loads(msg.payload)
+                if isinstance(msg.payload, str):
+                    msg.payload = json.loads(msg.payload)
             except json.decoder.JSONDecodeError:
                 addwarning(
                     "Expected a json payload but got '%s'",
